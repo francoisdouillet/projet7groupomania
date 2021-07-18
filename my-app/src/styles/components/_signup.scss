@@ -1,0 +1,17 @@
+.signup {
+    width: 40%;
+    margin: 0 auto;
+    box-shadow: 1px 0px 21px 5px rgba(0,0,0,0.40);
+    border-radius: 25px;
+    padding: 20px;
+    margin-top: 10%;
+    &__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 300px;
+    }
+    &--button {
+        width: 20px;
+    }
+}

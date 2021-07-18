@@ -1,0 +1,108 @@
+const Message = require("../models/Message");
+
+const fs = require("fs");
+
+exports.create = (req, res) => {
+  // Validate request
+  if (!req.body.title) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+
+  // Create a Tutorial
+  const tutorial = {
+    title: req.body.title,
+    content: req.body.content,
+    date: req.body.date,
+    attachment: req.body.attachment
+  };
+
+  // Save Tutorial in the database
+  Tutorial.create(tutorial)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+// Création d'un message
+/*exports.createOneMessage = (req, res, _) => {
+  const messageObject = JSON.parse(req.body.message);
+  const message = new Message({
+    ...messageObject,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
+  });
+  message
+    .save()
+    .then(() => {
+      res.status(201).json({ message: "Message créée." });
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
+}; */
+
+// Récupération de tous les messages
+exports.getAllMessage = (req, res, _) => {
+  Message.find()
+    .then((messages) => {
+      res.status(200).json(messages);
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
+};
+
+// Récupération d'un seul messsage
+exports.getOneMessage = (req, res, _) => {
+  Message.findOne({ _id: req.params.id })
+    .then((message) => {
+      res.status(200).json(message);
+    })
+    .catch((error) => {
+      res.status(404).json({ error });
+    });
+};
+
+// Supprimer un message
+exports.deleteOneMessage = (req, res, next) => {
+  Message.findOne({ _id: req.params.id })
+    .then((message) => {
+      const filename = message.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        Message.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+          .catch((error) => res.status(400).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
+// Modifier un message
+exports.modifyOneMessage = (req, res, _) => {
+  const messageObject = req.file
+    ? {
+        ...JSON.parse(req.body.message),
+        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
+
+  Message.updateOne(
+    { _id: req.params.id },
+    { ...messageObject, _id: req.params.id }
+  )
+    .then(() => res.status(200).json({ message: "Message modifiée." }))
+    .catch((error) => res.status(400).json({ error }));
+};
+
