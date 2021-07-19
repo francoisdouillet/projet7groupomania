@@ -11,7 +11,6 @@ var CryptoJS = require("crypto-js");
 
 const sequelize = require("sequelize");
 
-
 // Pour que l'utilisateur s'inscrive
 exports.signup = async (req, res, next) => {
   await sequelize.USER.create({
