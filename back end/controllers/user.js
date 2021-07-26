@@ -1,33 +1,21 @@
-const User = require("../models/User");
+const bcrypt = require("bcrypt"); // Hashage de passwords //
+const jwt = require("jsonwebtoken"); // Sécurisation de la connection grâce à des tokens uniques //
 
-// Permet d'échanger des jetons d'authentification pour la sécurité d'authentification
-const jwt = require("jsonwebtoken");
+const { User } = require("../models/index"); // Importation du modèle User //
 
-// Permet de crypter le mot de passe de l'utilisateur
-const bcrypt = require("bcrypt");
-
-// Permet de crypter l'email
-var CryptoJS = require("crypto-js");
-
-const sequelize = require("sequelize");
-
-// Pour que l'utilisateur s'inscrive
-exports.signup = async (req, res, next) => {
-  await sequelize.USER.create({
-    email: req.body.email,
+exports.signup = async (req, res) => {
+  const hash = await bcrypt.hash(req.body.password, 10);
+  const newUser = await User.create({
     username: req.body.username,
-    password: req.body.password,
-  }).then(() => {
-    res.status(201).json({
-      message: "Utilisateur bien crée",
-    })
-  }
-  );
+    email: req.body.email,
+    password: hash,
+    isAdmin: false,
+  });
 }; 
 
 // Pour que l'utilisateur se connecte
 exports.login = (req, res, next) => {
-  User.findOne({ email: CryptoJS.MD5(req.body.email).toString() })
+  User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });

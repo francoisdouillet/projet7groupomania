@@ -1,15 +1,17 @@
-const Message = require("../models/Message");
+const db = require("../models");
+const Message = db.Message;
 
 const fs = require("fs");
 
+
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  /* if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
-  }
+  } */
 
   // Create a Tutorial
   const tutorial = {
@@ -20,7 +22,7 @@ exports.create = (req, res) => {
   };
 
   // Save Tutorial in the database
-  Tutorial.create(tutorial)
+  Message.create(tutorial)
     .then(data => {
       res.send(data);
     })
@@ -32,25 +34,18 @@ exports.create = (req, res) => {
     });
 };
 
-// Création d'un message
-/*exports.createOneMessage = (req, res, _) => {
-  const messageObject = JSON.parse(req.body.message);
-  const message = new Message({
-    ...messageObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`,
-  });
-  message
-    .save()
-    .then(() => {
-      res.status(201).json({ message: "Message créée." });
+exports.findAll = (req, res) => {
+  
+  Message.findAll()
+    .then(data => {
+      res.send(data);
     })
-    .catch((error) => {
-      res.status(400).json({ error });
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
     });
-}; */
-
+};
 // Récupération de tous les messages
 exports.getAllMessage = (req, res, _) => {
   Message.find()

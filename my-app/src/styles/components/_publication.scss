@@ -1,0 +1,21 @@
+.publication {
+    width: 50%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 5%;
+    &__textarea {
+        overflow: auto;
+        box-sizing: border-box;
+        width: 100%;
+        border: none;
+        resize: none;
+        text-align: center;
+    }
+    &__button {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+}
