@@ -29,14 +29,13 @@ function Login() {
     };
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/users/signin",
+        "http://localhost:3001/api/users/login",
         userInformation
       );
-      response.then((value) => {
-        window.location.href = "http://localhost:3000/salut";
-      });
+        window.location.href = "http://localhost:3000/message";
     } catch (error) {
       console.error(error);
+      alert('Mot de passe incorect')
     }
   }
 

@@ -41,9 +41,11 @@ function Register(props) {
         userInformation
       );
       console.log(response)
+      alert('Utilisateur créé')
       history.push("/signin");
     } catch (error) {
       console.error(error);
+      alert('BAD REQUEST: Email or Username unavailable')
     }
 
   };
@@ -94,7 +96,6 @@ function Register(props) {
         <Button
           variant="contained"
           color="secondary"
-          type="submit"
           onClick={handleSubmitClick}
           id="submit"
         >
