@@ -1,19 +1,18 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Message from "./pages/Message";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
+import Message from "./pages/Message/Message";
+import Signin from "./pages/Signin/Signin";
+import Signup from "./pages/Signup/Signup";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
-      <Header />
         <Switch>
-          <Route path="/" exact component={Signup} />
-          <Route path="/signin" component={Signin} />
-          <Route path="/message" component={Message} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/signin" exact component={Signin} />
+          <ProtectedRoute path="/" exact component={Message} />
         </Switch>
       </BrowserRouter>
     </div>

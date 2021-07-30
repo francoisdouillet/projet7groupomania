@@ -2,10 +2,11 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import React, { useState } from "react";
-import theme from "../hooks/colors";
+import theme from "../../hooks/colors";
 import { ThemeProvider } from "@material-ui/styles";
+import { useHistory } from "react-router-dom";
 
-function Login() {
+const Login = () => {
   //Set state
   const [state, setState] = useState({
     email: "",
@@ -22,6 +23,8 @@ function Login() {
     }));
   };
 
+  const history = useHistory();
+
   async function onClickSubmit() {
     const userInformation = {
       email: state.email,
@@ -32,7 +35,8 @@ function Login() {
         "http://localhost:3001/api/users/login",
         userInformation
       );
-        window.location.href = "http://localhost:3000/message";
+        localStorage.setItem("isAuthenticated", "true");
+        history.push('/');
     } catch (error) {
       console.error(error);
       alert('Mot de passe incorect')

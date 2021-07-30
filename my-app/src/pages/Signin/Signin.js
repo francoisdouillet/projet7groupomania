@@ -1,9 +1,10 @@
-import Signincomp from "../components/Signin";
-
+import Signincomp from "./index";
+import Header from "../../components/HeaderAuth"
 
 const Signin = () => {
   return (
     <div>
+      <Header />
       <Signincomp />
     </div>
   );

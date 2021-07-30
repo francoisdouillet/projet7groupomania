@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import theme from "../hooks/colors";
+import theme from "../../hooks/colors";
 import { ThemeProvider } from "@material-ui/styles";
 import axios from "axios";
 import React, { useState } from "react";

@@ -4,10 +4,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core";
-import theme from "../hooks/colors";
+import theme from "../../hooks/colors";
 
 
-function Register(props) {
+const Register = () => {
   //Set state
   const [state, setState] = useState({
     email: "",
