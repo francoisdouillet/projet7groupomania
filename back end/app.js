@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors')
+const path = require("path");
 
 
 //routes
@@ -10,6 +12,12 @@ const postsRoutes = require('./routes/message');
 const { sequelize } = require('./models/index');
 
 const app = express();
+
+app.use(cors({
+  origin: true,
+  methods: ["GET", "POST"],
+  credentials: true,
+}))
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -29,6 +37,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postsRoutes);
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 const dbTest = async function () {
   try {

@@ -26,6 +26,7 @@ const Publication = () => {
       content: state.content,
       attachment: state.attachment,
     };
+    localStorage.setItem('salut', postInformation)
     try {
       const response = await axios.post(
         "http://localhost:3001/api/posts/",

@@ -3,37 +3,55 @@ const Message = db.Message;
 
 const fs = require("fs");
 
+exports.create = async (req, res, _) => {
 
-exports.create = (req, res) => {
+  const post = await db.Message.create({
+    include: [
+      {
+        model: db.User,
+      },
+    ],
+    content: req.body.content,
+    attachment: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    idUsers: user.id,
+  })
+    .then(() => {
+      res.status(201).json({ message: "Message créée." });
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
+};
+
+/*exports.create = (req, res) => {
   const tutorial = {
     title: req.body.title,
     content: req.body.content,
     date: req.body.date,
-    attachment: req.body.attachment
+    attachment: req.body.attachment,
   };
 
   // Save Tutorial in the database
   Message.create(tutorial)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the Tutorial.",
       });
     });
-};
+}; */
 
 exports.findAll = (req, res) => {
-  
   Message.findAll()
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.send(500).send({
-        message: err.message || "Some error accurred while retrieving books."
+        message: err.message || "Some error accurred while retrieving books.",
       });
     });
 };
@@ -91,4 +109,3 @@ exports.modifyOneMessage = (req, res, _) => {
     .then(() => res.status(200).json({ message: "Message modifiée." }))
     .catch((error) => res.status(400).json({ error }));
 };
-
