@@ -34,9 +34,12 @@ const Login = () => {
       const response = await axios.post(
         "http://localhost:3001/api/users/login",
         userInformation
-      );
+      ).then((response) => {
         localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("token", response.token)
         history.push('/');
+      })
+
     } catch (error) {
       console.error(error);
       alert('Mot de passe incorect')

@@ -1,6 +1,6 @@
 import HeaderMessage from "../../components/HeaderMessage";
 import Allpost from "./Allpost"
-import Publication from "./Publication copy"
+import Publication from "./Publication copy 2"
 
 const Message = () => {
     return (

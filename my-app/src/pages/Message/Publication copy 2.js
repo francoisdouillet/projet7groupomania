@@ -4,33 +4,22 @@ import theme from "../../hooks/colors";
 import { ThemeProvider } from "@material-ui/styles";
 import axios from "axios";
 
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 
 const Publication = () => {
-  /*const { register, handleSubmit, watch, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [content, setContent] = useState()
+  const [attachment, setAttachment] = useState()
 
-  const onClickSubmit = async (event) => {
+  const send = event => {
+    event.preventDefault()
+    const data = new FormData();
+    data.append("content", content);
+    data.append("image", attachment);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/posts/",
-        onSubmit
-      );
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  }; */
+    axios.post("http://localhost:3001/api/posts", data).then(res => console.log(res)).catch(err => console.log(err))
+  }
 
-  const { register, handleSubmit } = useForm() 
-
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("content", data.content);
-    formData.append("attachment", data.attachment[0].name);
-    console.log(data.attachment[0].name)
-
+  /*const onSubmit = async (data) => {
     try {
       const response = await axios({
         method: "post",
@@ -42,12 +31,12 @@ const Publication = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  }*/
   return (
     <div className="publication">
       <ThemeProvider theme={theme}>
-      <form /*onSubmit={handleSubmit(onClickSubmit)}*/ onSubmit={handleSubmit(onSubmit)}>
-        <TextField {...register("content", { required: true })}
+      <form>
+        <TextField
           id="standard-multiline-flexible content"
           className="publication__textarea"
           label="Exprimez-vous"
@@ -57,19 +46,26 @@ const Publication = () => {
           maxRows={4}
           multiline
           required
+          onChange={event => {
+            const { value } = event.target;
+            setContent(value);
+          }}
         />
         <div className="publication__button">
           <input
             accept="image/*"
-            id="contained-button-file"
+            id="contained-button-file attachment"
             multiple={false}
             type="file"
             name="image"
-            {...register("attachment", { required: true })}
             variant="contained"
             color="secondary"
+            onChange={event => {
+              const attachment = event.target.files[0];
+              setAttachment(attachment);
+            }}
           />
-          <Button variant="contained" color="secondary" type="submit">
+          <Button variant="contained" color="secondary" type="submit" onClick={send}>
             Envoyer
           </Button>
         </div>

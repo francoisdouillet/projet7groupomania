@@ -13,7 +13,7 @@ exports.create = async (req, res, _) => {
     ],
     content: req.body.content,
     attachment: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-    idUsers: user.id,
+    id: idUsers,
   })
     .then(() => {
       res.status(201).json({ message: "Message créée." });
