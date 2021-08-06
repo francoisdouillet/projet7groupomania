@@ -17,7 +17,7 @@ const Publication = () => {
     data.append("image", attachment);
 
     axios.post("http://localhost:3001/api/posts", data, { headers: { "Authorization":"Bearer " + localStorage.getItem("token")}}
-    ).then(res => console.log(res)).catch(err => console.log(err))
+    ).then(res => console.log(res), alert('Message crée')).catch(err => console.log(err))
   }
 
   return (

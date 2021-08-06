@@ -24,7 +24,7 @@ exports.create = async (req, res, _) => {
       },
     ],
     content: req.body.content,
-    idUsers: user.id,
+    userId: user.id,
     attachment: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
     }`,
@@ -60,23 +60,4 @@ exports.deleteOneMessage = (req, res, next) => {
       });
     })
     .catch((error) => res.status(500).json({ error }));
-};
-
-// Modifier un message
-exports.modifyOneMessage = (req, res, _) => {
-  const messageObject = req.file
-    ? {
-        ...JSON.parse(req.body.message),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-      }
-    : { ...req.body };
-
-  Message.updateOne(
-    { _id: req.params.id },
-    { ...messageObject, _id: req.params.id }
-  )
-    .then(() => res.status(200).json({ message: "Message modifiée." }))
-    .catch((error) => res.status(400).json({ error }));
 };
