@@ -1,0 +1,28 @@
+.card {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 5%;
+    border: 2px solid grey;
+    border-radius: 20px;
+    &__head {
+        padding-left: 10px;
+        display: flex;
+        &--name {
+            font-weight: bold;
+            padding-right: 10px;
+        }
+        &--date {
+            font-style: italic;
+            color: gray;
+        }
+    }
+    &__image {
+        width: 100%;
+        height: 500px;
+        &--img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}

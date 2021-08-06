@@ -1,9 +1,21 @@
 const db = require("../models");
 const Message = db.Message;
+const User = db.User
+const jwt = require("jsonwebtoken"); 
 
 const fs = require("fs");
 
+
+const decodeId = (authorization) => {
+  const token = authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  return {
+      id: decodedToken.userId,
+  };
+};
+
 exports.create = async (req, res, _) => {
+  const user = decodeId(req.headers.authorization);
 
   const post = await db.Message.create({
     include: [
@@ -12,8 +24,10 @@ exports.create = async (req, res, _) => {
       },
     ],
     content: req.body.content,
-    attachment: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-    id: idUsers,
+    idUsers: user.id,
+    attachment: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
   })
     .then(() => {
       res.status(201).json({ message: "Message créée." });
@@ -23,57 +37,14 @@ exports.create = async (req, res, _) => {
     });
 };
 
-/*exports.create = (req, res) => {
-  const tutorial = {
-    title: req.body.title,
-    content: req.body.content,
-    date: req.body.date,
-    attachment: req.body.attachment,
-  };
-
-  // Save Tutorial in the database
-  Message.create(tutorial)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial.",
-      });
-    });
-}; */
-
-exports.findAll = (req, res) => {
-  Message.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.send(500).send({
-        message: err.message || "Some error accurred while retrieving books.",
-      });
-    });
-};
 // Récupération de tous les messages
 exports.getAllMessage = (req, res, _) => {
-  Message.find()
+  Message.findAll()
     .then((messages) => {
       res.status(200).json(messages);
     })
     .catch((error) => {
       res.status(400).json({ error });
-    });
-};
-
-// Récupération d'un seul messsage
-exports.getOneMessage = (req, res, _) => {
-  Message.findOne({ _id: req.params.id })
-    .then((message) => {
-      res.status(200).json(message);
-    })
-    .catch((error) => {
-      res.status(404).json({ error });
     });
 };
 

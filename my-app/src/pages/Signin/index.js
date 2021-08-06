@@ -36,7 +36,7 @@ const Login = () => {
         userInformation
       ).then((response) => {
         localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("token", response.token)
+        localStorage.setItem("token", response.data.token)
         history.push('/');
       })
 
