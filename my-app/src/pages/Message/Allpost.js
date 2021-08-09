@@ -14,8 +14,6 @@ const Allpost = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(posts);
-
   return (
     <div>
       {posts.map((post) => (

@@ -1,9 +1,18 @@
+@mixin mobile {
+    @media screen and (max-width: 768px) {
+      @content;
+    }
+  }
+
 .card {
     width: 60%;
     margin: 0 auto;
     margin-top: 5%;
     border: 2px solid grey;
     border-radius: 20px;
+    @include mobile {
+        width: 90%;
+    }
     &__head {
         padding-left: 10px;
         display: flex;

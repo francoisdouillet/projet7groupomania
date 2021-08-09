@@ -1,6 +1,7 @@
 import logo from "../images/logo/icon-left-font.jpg";
 import { Link } from "@material-ui/core";
 import { Button } from "@material-ui/core";
+import axios from "axios";
 
 const HeaderMessage = () => {
 
@@ -8,13 +9,29 @@ const HeaderMessage = () => {
     localStorage.clear()
     window.location.pathname="/signin"
   }
+
+  const deleteProfil = () => {
+    axios.delete("http://localhost:3001/api/users/delete", {
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    })
+    .then((deleteProfil) => {
+      localStorage.clear()
+    })
+    .catch((error) => {
+      console.log(error)
+    }) 
+  }
+
+
   return (
     <div className="header">
       <div className="header__logo">
         <img src={logo} alt="logo" />
       </div>
       <nav className="header__nav">
-        <Link exact to="/profil" className="header__nav--link" color="secondary">
+        <Link exact to="/profil" className="header__nav--link" color="secondary" onClick={deleteProfil}>
           Profil
         </Link>
         <Button
