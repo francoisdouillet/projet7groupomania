@@ -1,6 +1,5 @@
 const db = require("../models");
 const Message = db.Message;
-const User = db.User
 const jwt = require("jsonwebtoken"); 
 
 const fs = require("fs");

@@ -16,10 +16,10 @@ const Allpost = () => {
 
   return (
     <div>
-      {posts.map((post) => (
+      {posts.sort((a, b) => b.id - a.id).map((post) => (
         <div className="card">
           <div className="card__head">
-            <p className="card__head--name">{post.UserId}</p>
+            <p className="card__head--name">{post.userId}</p>
             <p className="card__head--date">{post.createdAt}</p>
           </div>
           <div className="card__image">

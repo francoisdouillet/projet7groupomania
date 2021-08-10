@@ -3,11 +3,10 @@ const jwt = require("jsonwebtoken"); // Sécurisation de la connection grâce à
 
 const { User } = require("../models/index"); // Importation du modèle User //
 
-const decodeId = (authorization) => {
-  const token = authorization.split(" ")[1];
+const decodeId = (token) => {
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   return {
-      id: decodedToken.userId,
+    id: decodedToken.userId,
   };
 };
 
@@ -69,8 +68,12 @@ exports.login = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
   const user = decodeId(req.headers.authorization);
-  console.log(user)
-  User.destroy({ where: { id: user } })
-    .then(() => res.status(200).json({ message: "Utilisateur supprimé de la base de données" }))
-    .catch(error => res.status(500).json({ error }));
-}
+  console.log(user);
+  User.destroy({ where: { id: user.id } })
+    .then(() =>
+      res
+        .status(200)
+        .json({ message: "Utilisateur supprimé de la base de données" })
+    )
+    .catch((error) => res.status(500).json({ error }));
+};

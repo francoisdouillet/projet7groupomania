@@ -16,8 +16,12 @@ const HeaderMessage = () => {
         Authorization: localStorage.getItem("token")
       }
     })
-    .then((deleteProfil) => {
+    .then(() => {
       localStorage.clear()
+      alert('Utilisateur supprimé')
+      document.location.reload()
+    })
+    .then(() => {
     })
     .catch((error) => {
       console.log(error)
@@ -32,7 +36,7 @@ const HeaderMessage = () => {
       </div>
       <nav className="header__nav">
         <Link exact to="/profil" className="header__nav--link" color="secondary" onClick={deleteProfil}>
-          Profil
+          Supprimez votre compte
         </Link>
         <Button
           className="header__nav--link"
