@@ -3,9 +3,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import theme from "../../hooks/colors";
 import { ThemeProvider } from "@material-ui/styles";
-import { post } from "../../../../back end/routes/message";
 
 const Allpost = () => {
+
+  const isAdmin = localStorage.getItem('isAdmin')
+  const currentUserId = localStorage.getItem('userId')
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -30,18 +32,7 @@ const Allpost = () => {
       .catch((err) => console.log(err));
   };
 
-    const isAdmin = localStorage.getItem('isAdmin')
-    const userId = localStorage.get('userId')
-
   
-    if(isAdmin === true | userId === post.userId) {
-      return true
-    } else {
-      return false
-    }
-  
-
-
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -59,13 +50,17 @@ const Allpost = () => {
               </div>
               <div className="card__content">
                 <p>{post.content}</p>
+                {(isAdmin == "true" || post.userId == currentUserId) && (
                 <Button
+                  className="card__content--button"
                   variant="contained"
                   color="secondary"
                   onClick={() => deleteMessage(post.id)}
+                  style={{borderRadius: "0px 0px 18px 0px"}}
                 >
                   SUPPRIMER
                 </Button>
+              )}
               </div>
             </div>
           ))}
