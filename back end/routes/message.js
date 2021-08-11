@@ -14,4 +14,6 @@ router.get("/", messagesCtrl.getAllMessage);
 
 router.delete("/:id", auth, messagesCtrl.deleteOneMessage);
 
+router.get("/:id", messagesCtrl.getOneMessage)
+
 module.exports = router;
