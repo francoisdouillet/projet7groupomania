@@ -1,8 +1,6 @@
 import { Button } from "@material-ui/core";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import theme from "../../hooks/colors";
-import { ThemeProvider } from "@material-ui/styles";
 
 const Allpost = () => {
 
@@ -35,7 +33,6 @@ const Allpost = () => {
   
   return (
     <div>
-      <ThemeProvider theme={theme}>
         {posts
           .sort((a, b) => b.id - a.id)
           .map((post) => (
@@ -64,7 +61,6 @@ const Allpost = () => {
               </div>
             </div>
           ))}
-      </ThemeProvider>
     </div>
   );
 };

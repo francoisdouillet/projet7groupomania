@@ -1,7 +1,5 @@
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import theme from "../../hooks/colors";
-import { ThemeProvider } from "@material-ui/styles";
 import axios from "axios";
 
 import React, { useState } from "react";
@@ -27,7 +25,6 @@ const Publication = () => {
 
   return (
     <div className="publication">
-      <ThemeProvider theme={theme}>
         <form>
           <TextField
             id="standard-multiline-flexible content"
@@ -68,7 +65,6 @@ const Publication = () => {
             </Button>
           </div>
         </form>
-      </ThemeProvider>
     </div>
   );
 };

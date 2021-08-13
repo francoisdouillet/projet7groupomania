@@ -16,9 +16,7 @@ exports.signup = async (req, res, next) => {
       where: { email: req.body.email },
     });
     if (user !== null) {
-      if (user.pseudo === req.body.pseudo) {
-        return res.status(400).json({ error: "ce pseudo est déjà utilisé" });
-      }
+        return res.status(400).json({ error: "Cet email est déjà utilisé" });
     } else {
     bcrypt
       .hash(req.body.password, 10) // Permet le hashage du mot de passe
@@ -39,7 +37,6 @@ exports.signup = async (req, res, next) => {
   return res.status(400).send({ error: "email déjà utilisé" });
 }
 }
-
 
 // Pour que l'utilisateur se connecte
 exports.login = (req, res, next) => {

@@ -2,8 +2,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import React, { useState } from "react";
-import theme from "../../hooks/colors";
-import { ThemeProvider } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
@@ -51,7 +49,6 @@ const Login = () => {
   return (
     <div className="signup">
       <form className="signup__form">
-        <ThemeProvider theme={theme}>
           <TextField
             id="outlined-basic"
             color="secondary"
@@ -84,7 +81,6 @@ const Login = () => {
           >
             Se connecter
           </Button>
-        </ThemeProvider>
       </form>
     </div>
   );
